@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: '/api',
+  // Works in dev (BASE_URL='/') and in prod under /seedling-tax/ (BASE_URL='/seedling-tax/')
+  baseURL: `${import.meta.env.BASE_URL}api`,
   headers: { 'Content-Type': 'application/json' },
 });
 
@@ -86,13 +87,14 @@ export async function getReports(type, params = {}) {
 }
 
 // --- Categories ---
+// Backend endpoints are under /api/settings/categories*
 export async function getCategories() {
-  const { data } = await api.get('/categories');
+  const { data } = await api.get('/settings/categories/list');
   return data;
 }
 
 export async function createCategory(catData) {
-  const { data } = await api.post('/categories', catData);
+  const { data } = await api.post('/settings/categories', catData);
   return data;
 }
 
@@ -109,7 +111,7 @@ export async function updateSettings(key, value) {
 
 // --- Exchange Rates ---
 export async function getExchangeRate(currency, date) {
-  const { data } = await api.get(`/exchange-rate?currency=${currency}&date=${date}`);
+  const { data } = await api.get(`/currency/rate?currency=${currency}&date=${date}`);
   return data;
 }
 
@@ -117,7 +119,7 @@ export async function getExchangeRate(currency, date) {
 export async function scanReceipt(file) {
   const form = new FormData();
   form.append('file', file);
-  const { data } = await api.post('/scan/receipt', form, {
+  const { data } = await api.post('/ai/scan-receipt', form, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
   return data;
@@ -126,20 +128,20 @@ export async function scanReceipt(file) {
 export async function scanInvoice(file) {
   const form = new FormData();
   form.append('file', file);
-  const { data } = await api.post('/scan/invoice', form, {
+  const { data } = await api.post('/ai/scan-invoice', form, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
   return data;
 }
 
 export async function suggestCategory(txData) {
-  const { data } = await api.post('/ai/suggest-category', txData);
+  const { data } = await api.post('/ai/categorise', txData);
   return data;
 }
 
 // --- Import ---
 export async function getImportProfiles() {
-  const { data } = await api.get('/import/profiles');
+  const { data } = await api.get('/imports/profiles');
   return data;
 }
 
@@ -147,7 +149,7 @@ export async function uploadImport(file, profileName) {
   const form = new FormData();
   form.append('file', file);
   form.append('profile', profileName);
-  const { data } = await api.post('/import/upload', form, {
+  const { data } = await api.post('/imports/upload', form, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
   return data;
