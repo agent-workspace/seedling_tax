@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seedling Tax — Design Mockup</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+* { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+:root {
+  --bg-main: #7A7A78;
+  --bg-dark: #2C2C2A;
+  --bg-panel: #8E8E8B;
+  --text-light: #F1EFE8;
+  --text-dim: #B4B2A9;
+  --accent: #5DCAA5;
+  --accent-dark: #0F6E56;
+  --highlight-bg: #F1EFE8;
+  --highlight-text: #2C2C2A;
+  --input-bg: #F1EFE8;
+  --input-border: #B4B2A9;
+  --input-focus: #5DCAA5;
+  --warn: #EF9F27;
+  --warn-light: #FAC775;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'IBM Plex Sans', sans-serif;
+}
+ 
+body {
+  font-family: var(--mono);
+  background: #555;
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+}
+ 
+.app {
+  background: var(--bg-main);
+  border-radius: 8px;
+  overflow: hidden;
+  min-height: 520px;
+  width: 100%;
+  max-width: 960px;
+  color: var(--text-light);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+ 
+/* === TOPBAR === */
+.topbar {
+  background: var(--bg-dark);
+  padding: 6px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+.topbar .logo { color: var(--accent); font-weight: 500; }
+.topbar .info { color: var(--text-dim); font-size: 11px; }
+ 
+/* === MENU BAR === */
+.menu-bar {
+  background: var(--bg-panel);
+  display: flex;
+  padding: 0;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.menu-item {
+  padding: 6px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+  color: var(--text-light);
+}
+.menu-item .hotkey {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.menu-item.active {
+  background: var(--highlight-bg);
+  color: var(--highlight-text);
+}
+.menu-item.active .hotkey {
+  color: var(--accent-dark);
+}
+.menu-item:hover:not(.active) {
+  background: rgba(255,255,255,0.08);
+}
+ 
+/* === CONTENT AREA === */
+.content {
+  display: flex;
+  min-height: 440px;
+}
+ 
+/* === SIDEBAR === */
+.sidebar {
+  width: 200px;
+  background: rgba(0,0,0,0.12);
+  padding: 12px 0;
+  border-right: 1px solid rgba(0,0,0,0.15);
+  flex-shrink: 0;
+}
+.sidebar-item {
+  padding: 5px 16px;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-dim);
+}
+.sidebar-item .sk {
+  font-size: 10px;
+  color: var(--accent);
+  opacity: 0.7;
+}
+.sidebar-item.active {
+  background: var(--highlight-bg);
+  color: var(--highlight-text);
+  font-weight: 500;
+}
+.sidebar-item.active .sk {
+  color: var(--accent-dark);
+}
+.sidebar-item:hover:not(.active) {
+  background: rgba(255,255,255,0.06);
+}
+.sidebar-divider {
+  margin-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 12px;
+}
+ 
+/* === MAIN PANEL === */
+.main-panel {
+  flex: 1;
+  padding: 20px 24px;
+}
+ 
+.panel-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-light);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.panel-title .badge {
+  background: var(--accent-dark);
+  color: var(--accent);
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+ 
+/* === SUMMARY CARDS === */
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.summary-card {
+  background: rgba(0,0,0,0.15);
+  border-radius: 4px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--accent);
+}
+.summary-card .sc-label {
+  font-size: 10px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.summary-card .sc-value {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-light);
+  margin-top: 2px;
+}
+.summary-card.warn { border-left-color: var(--warn); }
+.summary-card.warn .sc-value { color: var(--warn-light); }
+.summary-card.good .sc-value { color: var(--accent); }
+ 
+/* === FORMS === */
+.form-group { margin-bottom: 14px; }
+.form-label {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+  display: block;
+}
+.form-input {
+  font-family: var(--sans);
+  width: 100%;
+  padding: 8px 12px;
+  background: var(--input-bg);
+  border: 2px solid transparent;
+  border-radius: 4px;
+  font-size: 14px;
+  color: var(--highlight-text);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.form-input:focus {
+  border-color: var(--input-focus);
+  box-shadow: 0 0 0 3px rgba(93,202,165,0.2);
+}
+.form-input::placeholder { color: #999; }
+ 
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.form-row-3 {
+  display: grid;
+  grid-template-columns: 1fr 120px 100px;
+  gap: 12px;
+}
+ 
+select.form-input {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 5l3 3 3-3' fill='none' stroke='%23666' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 28px;
+  cursor: pointer;
+}
+ 
+/* === BUTTONS === */
+.btn {
+  font-family: var(--sans);
+  padding: 7px 20px;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.btn-primary {
+  background: var(--accent-dark);
+  color: var(--accent);
+  font-weight: 500;
+}
+.btn-primary:hover { background: #0d7d62; }
+.btn-secondary {
+  background: rgba(255,255,255,0.08);
+  color: var(--text-dim);
+}
+.btn-secondary:hover { background: rgba(255,255,255,0.14); }
+ 
+/* === STATUSBAR === */
+.statusbar {
+  background: var(--bg-dark);
+  padding: 4px 16px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-dim);
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.statusbar .keys span {
+  margin-right: 16px;
+}
+.statusbar .keys span em {
+  color: var(--accent);
+  font-style: normal;
+}
+</style>
+</head>
+<body>
+ 
+<div class="app">
+  <div class="topbar">
+    <span class="logo">seedling tax</span>
+    <span class="info">tax year 2026/27 · sole trader · Viktor T.</span>
+  </div>
+ 
+  <div class="menu-bar">
+    <div class="menu-item active"><span class="hotkey">D</span>ashboard</div>
+    <div class="menu-item"><span class="hotkey">I</span>ncome</div>
+    <div class="menu-item"><span class="hotkey">E</span>xpenses</div>
+    <div class="menu-item">In<span class="hotkey">v</span>oices</div>
+    <div class="menu-item"><span class="hotkey">T</span>ax</div>
+    <div class="menu-item"><span class="hotkey">R</span>eports</div>
+    <div class="menu-item"><span class="hotkey">S</span>ettings</div>
+  </div>
+ 
+  <div class="content">
+    <div class="sidebar">
+      <div class="sidebar-item active">Overview <span class="sk">1</span></div>
+      <div class="sidebar-item">Recent activity <span class="sk">2</span></div>
+      <div class="sidebar-item">Monthly summary <span class="sk">3</span></div>
+      <div class="sidebar-item">Agent insights <span class="sk">4</span></div>
+      <div class="sidebar-item sidebar-divider">Quick add... <span class="sk">N</span></div>
+      <div class="sidebar-item">Import data... <span class="sk">Ctrl+I</span></div>
+      <div class="sidebar-item">Scan receipt... <span class="sk">Ctrl+R</span></div>
+    </div>
+ 
+    <div class="main-panel">
+      <div class="summary-cards">
+        <div class="summary-card good">
+          <div class="sc-label">Income (ytd)</div>
+          <div class="sc-value">&pound;0.00</div>
+        </div>
+        <div class="summary-card warn">
+          <div class="sc-label">Expenses (ytd)</div>
+          <div class="sc-value">&pound;0.00</div>
+        </div>
+        <div class="summary-card">
+          <div class="sc-label">Est. tax owed</div>
+          <div class="sc-value">&pound;0.00</div>
+        </div>
+      </div>
+ 
+      <div class="panel-title">
+        Quick add transaction
+        <span class="badge">Tab to navigate</span>
+      </div>
+ 
+      <div class="form-row" style="margin-bottom: 14px;">
+        <div class="form-group">
+          <label class="form-label">Type</label>
+          <select class="form-input">
+            <option>Income</option>
+            <option>Expense</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Date</label>
+          <input class="form-input" type="text" value="2026-04-06" />
+        </div>
+      </div>
+ 
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <input class="form-input" type="text" placeholder="e.g. Hetzner server — CX22 monthly" autofocus />
+      </div>
+ 
+      <div class="form-row-3">
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select class="form-input">
+            <option>IT &amp; hosting</option>
+            <option>Software &amp; subscriptions</option>
+            <option>Office supplies</option>
+            <option>Travel</option>
+            <option>Professional services</option>
+            <option>Marketing</option>
+            <option>Client payment</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Amount</label>
+          <input class="form-input" type="text" placeholder="0.00" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Currency</label>
+          <select class="form-input">
+            <option>GBP</option>
+            <option>EUR</option>
+            <option>USD</option>
+            <option>HUF</option>
+          </select>
+        </div>
+      </div>
+ 
+      <div style="display: flex; gap: 8px; margin-top: 8px;">
+        <button class="btn btn-primary">Save (Enter)</button>
+        <button class="btn btn-secondary">Attach receipt (Ctrl+A)</button>
+        <button class="btn btn-secondary">Cancel (Esc)</button>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="statusbar">
+    <div class="keys">
+      <span><em>Alt+key</em> menu</span>
+      <span><em>1-9</em> sidebar</span>
+      <span><em>Tab</em> next field</span>
+      <span><em>Shift+Tab</em> prev field</span>
+      <span><em>?</em> all shortcuts</span>
+    </div>
+    <div>seedling tax v0.1 · GBP base · frankfurter.dev</div>
+  </div>
+</div>
+ 
+</body>
+</html>
